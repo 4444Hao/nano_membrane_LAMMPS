@@ -38,6 +38,6 @@ flowchart LR
 ---
 OVITO展示
 
-<video src="./assets/OVITO.mp4" controls autoplay muted loop width="300" style="object-fit: cover; object-position: center;">
+[<video src="./assets/OVITO.mp4" controls autoplay muted loop width="300" style="object-fit: cover; object-position: center;">
   OVITO展示
-</video>
+</video>](https://github.com/user-attachments/assets/63fed3df-bc58-4d74-bf61-ffbcd4734945)
