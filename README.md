@@ -1,37 +1,49 @@
-### Materials Studio 2019
- 分子部件构建
- 力场分配
- 电荷设置
-      标准值: O=-0.8476, H=0.4238, Na=+1, Cl=-1
-导出 **pdb 格式**
-### Packmol
-  in 文件构建：指导组装
-  装得到完整版 pdb 文件
-    `packmol-20.2.2 < packmol.inp`
-### OVITO
- 验证: 打开 pdb, 确认各区域原子位置正确、无重叠
-### cvff_aug.frc + msi2lmp.exe
-  转换 pdb 为 data 格式
-    输入: 完整 pdb + cvff_aug.frc + msi2lmp 控制文件
-    输出: **data文件**
-  删减 (若需移除多余原子)
-    对照删除
-### LAMMPS
-  文件准备
-    data 文件
-    in 文件:  指导模拟中的温度、电荷等参数
-    run_slurm.sh: 执行脚本
- 指令
-    `source /home/public/software_install/intel/bin/compilervars.sh intel64`
-    `mpirun -n 28 lammps-20200303-icc_kokkos_omp -sf intel -in in.oscillatory_cnt.lmp`
+flowchart TB
+    %% ========== 定义节点样式（使用 style 直接定义，绕开 Obsidian 主题覆盖） ==========
+    style A fill:#5a6a4a,stroke:#708090,color:#fff,stroke-width:2px,stroke-linejoin:round
+    style B fill:#3a7f7f,stroke:#5f9ea0,color:#fff,stroke-width:1px,stroke-linejoin:round
+    style C fill:#5a6a4a,stroke:#708090,color:#fff,stroke-width:2px,stroke-linejoin:round
+    style D fill:#3a7f7f,stroke:#5f9ea0,color:#fff,stroke-width:1px,stroke-linejoin:round
+    style E fill:#3a7f7f,stroke:#5f9ea0,color:#fff,stroke-width:1px,stroke-linejoin:round
+    style F fill:#3a7f7f,stroke:#5f9ea0,color:#fff,stroke-width:1px,stroke-linejoin:round
+    style G fill:#3a7f7f,stroke:#5f9ea0,color:#fff,stroke-width:1px,stroke-linejoin:round
+    style H fill:#3a7f7f,stroke:#5f9ea0,color:#fff,stroke-width:1px,stroke-linejoin:round
+    style I fill:#7a3a3a,stroke:#a52a2a,color:#fff,stroke-width:1px,stroke-linejoin:round
+    style J fill:#7a3a3a,stroke:#a52a2a,color:#fff,stroke-width:1px,stroke-linejoin:round
+    style K fill:#5a6a4a,stroke:#708090,color:#fff,stroke-width:2px,stroke-linejoin:round
+    style L fill:#5a6a4a,stroke:#708090,color:#fff,stroke-width:2px,stroke-linejoin:round
+    
+    %% ========== 节点定义（简化名称，中文显示更清晰） ==========
+    A["MaterialStudio 2019"] 
+    B["零件 pdb 文件"]
+    C["Packmol"]
+    D["in 文件"]
+    E["完整版 pdb 文件"]
+    F["cvff_aug.frc + msi2lmp"]
+    G["car 文件"]
+    H["data 文件"]
+    I["in 文件"]
+    J["sh 脚本"]
+    K["LAMMPS 模拟"]
+    L["OVITO 验证查看"]
 
-### 分析流程 (模拟完成后)
-  OVITO 打开 .lammpstrj
-  通量分析
-    读 flux_cnt_oscillatory.dat
-    绘制 v_n_perm_water / v_n_perm_na / v_n_perm_cl 随时间曲线
-    截留率 = 1 - (Δn_perm_ions / Δn_perm_water)
-  扩散系数
-  
+    %% ========== 黄色链路：体系构建 ==========
+    A -->|"输出"| B
+    D --> C
+    B --> C
+    C --> E
 
-[[VACNT分子动力学模拟全流程操作指南]]
+    %% ========== 红色链路：力场文件生成 ==========
+    A -->|"力场类型、晶格"| G
+    F --> H
+    G --> H
+
+    %% ========== 绿色链路：模拟执行 ==========
+    H -->|"优化调整"| K
+    I --> K
+    J --> K
+
+    %% ========== 灰色链路：可视化反馈 ==========
+    K --> L
+    E --> L
+    L --> E
