@@ -1,0 +1,22 @@
+# ============================================================
+# LAMMPS 分子动力学模拟 .gitignore
+# ============================================================
+
+# --- LAMMPS / msi2lmp 生成的大型数据文件（可由输入脚本重新生成）---
+*.data
+*.car
+*.mdf
+
+# --- Windows 可执行文件 ---
+msi2lmp.exe
+
+# --- 运行输出目录 ---
+**/last/
+
+# --- Packmol 生成的大型 PDB（保留手动创建的小模板 Cl.pdb, Na.pdb, water*.pdb）---
+Packmol/smx*.pdb
+Packmol/membrane*.pdb
+rePackmol/smx*.pdb
+rePackmol/membrane*.pdb
+data/low/*.pdb
+rePackmol/re_*.pdb
